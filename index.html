@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
+        <script>
+            var sp = new StatusPage.page({ page : 'kn0psd40rrjm' });
+            sp.scheduled_maintenances({
+                filter : 'upcoming',
+                success : function(data) {
+                    console.log(data.scheduled_maintenances[0].scheduled_for);
+                }
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
