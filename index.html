@@ -1,16 +1,49 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <title>MyNAEP Status Embedding Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
         <script>
-            var sp = new StatusPage.page({ page : 'kn0psd40rrjm' });
-            sp.scheduled_maintenances({
-                filter : 'upcoming',
-                success : function(data) {
-                    console.log(data.scheduled_maintenances[0].scheduled_for);
+            var sp = new StatusPage.page({ page: 'kn0psd40rrjm' });
+            sp.incidents({
+                filter: 'unresolved',
+                success: function(data) {
+                    console.log(data);
+                    var incidents = data.incidents;
+                    incidents.forEach(function(incident) {
+                        $('#status-content').append('<h4>' + incident.name + '</h4>');
+                        var updates = incident.incident_updates;
+                        updates.forEach(function(update) {
+                            var timestamp = new Date(update.created_at);
+                            $('#status-content').append('<p>&nbsp;&nbsp;<strong>'
+                                + timestamp.toLocaleDateString()
+                                + '&nbsp;'
+                                + timestamp.toLocaleTimeString()
+                                + '</strong>&nbsp;'
+                                + update.body
+                                + '</p>');
+                        })
+                    });
                 }
             });
         </script>
     </head>
     <body>
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <h1>MyNAEP Status Embedding Demo</h1>
+            <div class="well">
+                <div id="status-content">
+                    <!--status message(s) is(are) inserted here-->
+                </div>
+            </div>
+        </div>
+    </div>
     </body>
 </html>
