@@ -15,18 +15,20 @@
                     console.log(data);
                     var incidents = data.incidents;
                     incidents.forEach(function(incident) {
-                        $('#status-content').append('<h4>' + incident.name + '</h4>');
-                        var updates = incident.incident_updates;
-                        updates.forEach(function(update) {
-                            var timestamp = new Date(update.created_at);
-                            $('#status-content').append('<p>&nbsp;&nbsp;<strong>'
-                                + timestamp.toLocaleDateString()
-                                + '&nbsp;'
-                                + timestamp.toLocaleTimeString()
-                                + '</strong>&nbsp;'
-                                + update.body
-                                + '</p>');
-                        })
+                        if (incident.name === 'Status Notice') {
+                            $('#status-content').append('<h4>' + incident.name + '</h4>');
+                            var updates = incident.incident_updates;
+                            updates.forEach(function(update) {
+                                var timestamp = new Date(update.created_at);
+                                $('#status-content').append('<p>&nbsp;&nbsp;<strong>'
+                                    + timestamp.toLocaleDateString()
+                                    + '&nbsp;'
+                                    + timestamp.toLocaleTimeString()
+                                    + '</strong>&nbsp;'
+                                    + update.body
+                                    + '</p>');
+                            })
+                        }
                     });
                 }
             });
